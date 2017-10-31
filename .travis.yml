@@ -7,5 +7,5 @@ before_install:
   - ./.travis/install-dependencies.sh 
 
 script:
-  - ./functional_tests/test.sh bionitio.rb
+  - ./functional_tests/test.sh ruby/bin/bionitio
   - ./.travis/unit-test.sh
