@@ -3,9 +3,6 @@ dist: trusty
 
 language: ruby
 
-before_install:
-  - ./.travis/install-dependencies.sh 
-
 script:
   - ./functional_tests/test.sh bin/bionitio
   - ./.travis/unit-test.sh
