@@ -24,7 +24,7 @@ module Bionitio
         end
     
         def self.hdr
-            %w(FILENAME TOTAL NUMSEQ MIN AVG MAX).join("\t")
+            %w(FILENAME NUMSEQ TOTAL MIN AVG MAX).join("\t")
         end
     
         # String format for stats on this fasta file.  Use "-" for invalid numbers when no sequences
