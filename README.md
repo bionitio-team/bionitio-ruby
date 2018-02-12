@@ -2,7 +2,7 @@
 
 # Overview 
 
-This is a Ruby implementation of [bionitio](https://github.com/bionitio-team/bionitio).
+This is a ruby implementation of [bionitio](https://github.com/bionitio-team/bionitio).
 
 The program reads one or more input FASTA files. For each file it computes a variety of statistics, and then prints a summary of the statistics as output.
 
@@ -20,31 +20,6 @@ This program is released as open source software under the terms of [MIT License
 4. `export PATH=$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH`
 
 Run without installing: `./bin/bionitio`
-
-
-## Usage
-
-```
-bionitio --help
-
-bionitio FASTA_FILE
-
-Bionitio can be installed using `pip` in a variety of ways (`%` indicates the command line prompt):
-
-1. Inside a virtual environment: 
-```
-% virtualenv bionitio_dev
-% source bionitio_dev/bin/activate
-% pip install -U /path/to/bionitio.rb
-```
-2. Into the global package database for all users:
-```
-% pip install -U /path/to/bionitio.rb
-```
-3. Into the user package database (for the current user only):
-```
-% pip install -U --user /path/to/bionitio.rb
-```
 
 # General behaviour
 
@@ -71,9 +46,10 @@ In the examples below, `%` indicates the command line prompt.
 ## Help message
 
 Bionitio can display usage information on the command line via the `-h` or `--help` argument:
+
 ```
-% bionitio.rb -h
-usage: bionitio.rb [-h] [--minlen N] [--version] [--log LOG_FILE]
+% bionitio -h
+usage: bionitio [-h] [--minlen N] [--version] [--log LOG_FILE]
                   [FASTA_FILE [FASTA_FILE ...]]
 
 Print fasta stats
@@ -96,14 +72,14 @@ There are no restrictions on the name of the FASTA files. Often FASTA filenames 
 
 The example below illustrates bionitio applied to a single named FASTA file called `file1.fa`:
 ```
-% bionitio.rb file1.fa
+% bionitio file1.fa
 FILENAME	NUMSEQ	TOTAL	MIN	AVG	MAX
 file1.fa	5264	3801855	31	722	53540
 ```
 
 The example below illustrates bionitio applied to three named FASTA files called `file1.fa`, `file2.fa` and `file3.fa`:
 ```
-% bionitio.rb file1.fa file2.fa file3.fa
+% bionitio file1.fa file2.fa file3.fa
 FILENAME	NUMSEQ	TOTAL	MIN	AVG	MAX
 file1.fa	5264	3801855	31	722	53540
 file2.fa	5264	3801855	31	722	53540
@@ -115,7 +91,7 @@ file3.fa	5264	3801855	31	722	53540
 The example below illustrates bionitio reading a FASTA file from standard input. In this example we have redirected the contents of a file called `file1.fa` into the standard input using the shell redirection operator `<`:
 
 ```
-% bionitio.rb < file1.fa
+% bionitio < file1.fa
 FILENAME	NUMSEQ	TOTAL	MIN	AVG	MAX
 stdin	5264	3801855	31	722	53540
 ```
@@ -123,7 +99,7 @@ stdin	5264	3801855	31	722	53540
 Equivalently, you could achieve the same result by piping a FASTA file into bionitio:
 
 ```
-% cat file1.fa | bionitio.rb
+% cat file1.fa | bionitio
 FILENAME	NUMSEQ	TOTAL	MIN	AVG	MAX
 stdin	5264	3801855	31	722	53540
 ```
@@ -134,7 +110,7 @@ Bionitio provides an optional command line argument `--minlen` which causes it t
 
 The example below illustrates bionitio applied to a single FASTA file called `file`.fa` with a `--minlen` filter of `1000`.
 ```
-% bionitio.rb --minlen 1000 file.fa
+% bionitio --minlen 1000 file.fa
 FILENAME	NUMSEQ	TOTAL	MIN	AVG	MAX
 file1.fa	4711	2801855	1021	929	53540
 ```
@@ -144,23 +120,26 @@ file1.fa	4711	2801855	1021	929	53540
 If the ``--log FILE`` command line argument is specified, bionitio will output a log file containing information about program progress. The log file includes the command line used to execute the program, and a note indicating which files have been processes so far. Events in the log file are annotated with their date and time of occurrence. 
 
 ```
-% bionitio.rb --log bt.log file1.fasta file2.fasta 
+% bionitio --log bt.log file1.fasta file2.fasta 
 # normal bionitio output appears here
 # contents of log file displayed below
+```
+```
 % cat bt.log
 12/04/2016 19:14:47 program started
-12/04/2016 19:14:47 command line: /usr/local/bin/bionitio.rb --log bt.log file1.fasta file2.fasta 
+12/04/2016 19:14:47 command line: /usr/local/bin/bionitio.rb --log bt.log file1.fasta file2.fasta
 12/04/2016 19:14:47 Processing FASTA file from file1.fasta
 12/04/2016 19:14:47 Processing FASTA file from file2.fasta
 ```
+
 
 ## Empty files
 
 It is possible that the input FASTA file contains zero sequences, or, when the `--minlen` command line argument is used, it is possible that the file contains no sequences of length greater-than-or-equal-to the supplied value. In both of those cases bionitio will not be able to compute minimum, maximum or average sequence lengths, and instead it shows output in the following way:
 
-The example below illustrates bionitio applied to a single FASTA file called `empty`.fa` which contains zero sequences:
+The example below illustrates bionitio applied to a single FASTA file called `empty.fa` which contains zero sequences:
 ```
-% bionitio.rb empty.fa
+% bionitio empty.fa
 FILENAME	NUMSEQ	TOTAL	MIN	AVG	MAX
 empty.fa	0	0	-	-	-
 ```
@@ -185,15 +164,23 @@ Bionitio returns the following exit status values:
 
 # Testing
 
-`ruby test/test_bionitio.rb`
+## Unit tests
+
+```
+ruby test/test_bionitio.rb
+```
+
+## Test suite
 
 A set of sample test input files is provided in the `test_data` folder.
 ```
-% bionitio.rb two_sequence.fasta 
-FILENAME	TOTAL	NUMSEQ	MIN	AVG	MAX
-two_sequence.fasta	2	357	120	178	237
+% bionitio two_sequence.fasta
+FILENAME        TOTAL   NUMSEQ  MIN     AVG     MAX
+two_sequence.fasta      2       357     120     178     237
 ```
 
 # Bugs
 
-File at our [Issue Tracker](https://github.com/bionitio-team/bionitio/issues)
+[General bionitio issues](https://github.com/bionitio-team/bionitio/issues)
+
+[bionitio-ruby specific issues](https://github.com/bionitio-team/bionitio-ruby/issues) 
