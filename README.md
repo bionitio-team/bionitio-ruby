@@ -10,6 +10,16 @@ This program is released as open source software under the terms of [MIT License
 
 # Installing
 
+Clone this repository: 
+```
+git clone https://github.com/bionitio-team/bionitio-ruby
+```
+
+Move into the repository directory:
+```
+cd bionitio-ruby
+```
+
 1. Ensure you have ruby installed
 2. `gem build bionitio.gemspec`
 3. `gem install --user-install bionitio`
